@@ -1,0 +1,8 @@
+<div>
+    <h2>Register</h2>
+    <div *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</div>
+    <input [(ngModel)]="credentials.username" name="username" placeholder="Username">
+    <input [(ngModel)]="credentials.password" name="password" placeholder="Password" type="password">
+    <button (click)="register()">Register</button>
+</div>
+  
