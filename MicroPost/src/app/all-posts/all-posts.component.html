@@ -1,1 +1,14 @@
-<p>all-posts works!</p>
+<div class="posts-list">
+    <div *ngFor="let post of posts">
+      <a [routerLink]="['/posts', post.id]">
+        <div class="post-header">
+    <!--      <img src="" alt="Profile Picture">-->
+          <h2> {{post.username}}</h2>
+          <h3> Category: {{post.category_id}}</h3>
+        </div>
+        <div class="post-content">
+          <p>{{post.content}}</p>
+        </div>
+      </a>
+    </div>
+</div>

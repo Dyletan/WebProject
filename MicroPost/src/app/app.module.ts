@@ -16,6 +16,7 @@ import { AllCommentsComponent } from './all-comments/all-comments.component';
 import { AllPostsComponent } from './all-posts/all-posts.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CommentComponent } from './comment/comment.component';
+import { PostComponent } from './post/post.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { CommentComponent } from './comment/comment.component';
     AllCommentsComponent,
     AllPostsComponent,
     NavbarComponent,
+    PostComponent
 
   ],
   providers: [
