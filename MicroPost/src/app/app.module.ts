@@ -9,14 +9,13 @@ import {routes} from "./app.routes";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { AllCommentsComponent } from './all-comments/all-comments.component';
 import { AllPostsComponent } from './all-posts/all-posts.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { CommentComponent } from './comment/comment.component';
 import { PostComponent } from './post/post.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   imports: [
@@ -28,13 +27,12 @@ import { PostComponent } from './post/post.component';
   declarations: [
     LoginComponent,
     RegisterComponent,
-    HomeComponent,
     AppComponent,
-    CommentComponent,
     AllCommentsComponent,
     AllPostsComponent,
     NavbarComponent,
-    PostComponent
+    PostComponent,
+    AboutComponent
 
   ],
   providers: [

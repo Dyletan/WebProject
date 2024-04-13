@@ -1,1 +1,18 @@
-<p>navbar works!</p>
+<div class="top-bar">
+    <a [routerLink]="['/']">
+        <h2>Home</h2>
+    </a>
+    <a [routerLink]="['/']">
+        <h2>Create post</h2>
+    </a>
+    <a [routerLink]="['/login']">
+        <h2>Log out</h2>
+    </a>
+    <a [routerLink]="['/about']">
+        <h2>About</h2>
+    </a>
+</div>
+
+<router-outlet>
+
+</router-outlet>
