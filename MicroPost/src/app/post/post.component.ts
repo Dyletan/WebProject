@@ -2,7 +2,7 @@ import { Component, OnInit, } from '@angular/core';
 import { Post } from '../models';
 import { FormsModule } from "@angular/forms";
 import { NgIf } from "@angular/common";
-import { PostsService } from "../posts.service";
+import { PostsService } from "../services/posts.service";
 import { ActivatedRoute, RouterModule } from "@angular/router";
 
 @Component({

@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
 
 from django.contrib.auth import authenticate
+from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
@@ -14,31 +15,29 @@ from .serializers import *
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
-    user = authenticate(username=username, password=password)
+    if request.method == 'POST':
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({'token': token.key})
+        else:
+            return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-    if user is None:
-        return Response({'error': 'Invalid Credentials'}, status=400)
-
-    token, created = Token.objects.get_or_create(user=user)
-    return Response({'token': token.key})
-
-
-@csrf_exempt
+@api_view(['POST'])
+@permission_classes([AllowAny])
 def register(request):
     if request.method == 'POST':
-        # username = request.POST['username']
-        # password = request.POST['password']
-        username = request.data.get('user')
+        username = request.data.get('username')
         password = request.data.get('password')
         if User.objects.filter(username=username).exists():
-            return JsonResponse({'status': 'error', 'message': 'Username already exists.'})
+            return Response({'status': 'error', 'message': 'Username already exists.'}, status=status.HTTP_400_BAD_REQUEST)
         user = User.objects.create_user(username=username, password=password)
         user.save()
-        return JsonResponse({'status': 'success', 'message': 'User created successfully.'})
+        return Response({'status': 'success', 'message': 'User created successfully.'}, status=status.HTTP_201_CREATED)
     else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+        return Response({'status': 'error', 'message': 'Invalid request method.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 # FBV

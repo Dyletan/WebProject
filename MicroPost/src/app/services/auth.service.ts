@@ -6,21 +6,21 @@ interface Credentials {
   username: string;
   password: string;
 }
-const url = 'http://127.0.0.1:8000'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private url = 'http://127.0.0.1:8000/api/'
   
   constructor(private http: HttpClient, private router: Router) {}
 
   login(credentials: Credentials) {
-    return this.http.post<any>(url + '/api/login', credentials);
+    return this.http.post<any>(`${this.url}login`, credentials);
   }
 
   register(credentials: Credentials) {
-    return this.http.post<any>(url + '/api/register', credentials);
+    return this.http.post<any>(`${this.url}register`, credentials);
   }
 
   logout() {
