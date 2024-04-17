@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 interface Credentials {
   username: string;
@@ -12,8 +11,8 @@ interface Credentials {
 })
 export class AuthService {
   private url = 'http://127.0.0.1:8000/api/'
-  
-  constructor(private http: HttpClient, private router: Router) {}
+
+  constructor(private http: HttpClient) {}
 
   login(credentials: Credentials) {
     return this.http.post<any>(`${this.url}login`, credentials);
@@ -25,7 +24,6 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
   }
-  
+
 }

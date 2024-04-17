@@ -5,7 +5,7 @@
     <a [routerLink]="['/']">
         <h2>Create post</h2>
     </a>
-    <a [routerLink]="['/login']">
+    <a *ngIf="token" [routerLink]="['/login']" (click) = "logout()">
         <h2>Log out</h2>
     </a>
     <a [routerLink]="['/about']">
