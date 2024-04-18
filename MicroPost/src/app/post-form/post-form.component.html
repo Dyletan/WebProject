@@ -1,0 +1,13 @@
+<form (ngSubmit)="onSubmit()">
+  <div class="form-header">
+    <div class="username">{{ localStorage.getItem('username') }}</div>
+    <select [(ngModel)]="post.category_id" name="category_id">
+      <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+    </select>
+  </div>
+  <textarea [(ngModel)]="post.content" name="content" placeholder="Create post..."></textarea>
+  <br>
+  <button class="post-button" type="submit">Post</button>
+  <hr>
+</form>
+

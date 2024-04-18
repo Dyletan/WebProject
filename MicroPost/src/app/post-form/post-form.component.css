@@ -1,0 +1,38 @@
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+/*!* CSS for FormPost Component *!*/
+/*.form-post {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: flex-start;*/
+/*  padding: 10px;*/
+/*}*/
+
+.username {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-container {
+  display: flex;
+  width: 100%;
+}
+
+.form-input {
+  flex-grow: 1;
+  border: none;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.form-input:focus {
+  outline: none;
+}
+
+.post-button {
+  padding: 10px 20px;
+  cursor: pointer;
+}

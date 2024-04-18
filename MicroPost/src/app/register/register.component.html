@@ -4,5 +4,5 @@
     <input [(ngModel)]="credentials.username" name="username" placeholder="Username">
     <input [(ngModel)]="credentials.password" name="password" placeholder="Password" type="password">
     <button (click)="register()">Register</button>
+    <p *ngIf="!localStorage.getItem('token')">If you have an account <a [routerLink]="['/login']">login</a></p>
 </div>
-  

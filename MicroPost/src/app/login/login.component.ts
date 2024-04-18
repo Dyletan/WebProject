@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './login.component.css'
 })
 
-export class LoginComponent {
+export class LoginComponent{
   credentials = {username: '', password: ''};
   errorMessage = '';
 
@@ -20,6 +20,7 @@ export class LoginComponent {
       this.authService.login(this.credentials).subscribe(res => {
         if (res.token) {
           localStorage.setItem('token', res.token);
+          localStorage.setItem('username', this.credentials.username);
           this.router.navigate(['/']);
         } else {
           this.errorMessage = 'Failed to login. Username or password is incorrect.';

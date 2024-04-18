@@ -1,18 +1,11 @@
-<div class="top-bar">
+<div class="top-bar" *ngIf="localStorage.getItem('token')">
     <a [routerLink]="['/']">
         <h2>Home</h2>
     </a>
-    <a [routerLink]="['/']">
-        <h2>Create post</h2>
-    </a>
-    <a *ngIf="token" [routerLink]="['/login']" (click) = "logout()">
+    <a [routerLink]="['/login']" (click) = "logout()">
         <h2>Log out</h2>
     </a>
     <a [routerLink]="['/about']">
         <h2>About</h2>
     </a>
 </div>
-
-<router-outlet>
-
-</router-outlet>

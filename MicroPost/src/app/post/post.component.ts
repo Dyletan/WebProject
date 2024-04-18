@@ -1,5 +1,5 @@
 import { Component, OnInit, } from '@angular/core';
-import { Post } from '../models';
+import { Post } from '../models/post';
 import { FormsModule } from "@angular/forms";
 import { NgIf } from "@angular/common";
 import { PostsService } from "../services/posts.service";

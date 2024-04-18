@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './register.component.css'
 })
 
-export class RegisterComponent {
+export class RegisterComponent{
   credentials = {username: '', password: ''};
   errorMessage = '';
 
@@ -26,5 +26,6 @@ export class RegisterComponent {
       this.errorMessage = 'Username and password cannot be blank.';
     }
   }
-  
+
+  protected readonly localStorage = localStorage;
 }

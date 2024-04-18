@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Post} from "../models";
+import {Post} from "../models/post";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {Category} from "../models/category";
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,20 @@ export class PostsService {
     return this.client.get<Post[]>(`${this.baseUrl}/users/${user_id}/posts`);
   }
 
-  getPosts(){
+  getPosts(): Observable<Post[]>{
     return this.client.get<Post[]>(`${this.baseUrl}/posts`);
   }
 
   getPost(id: number): Observable<Post> {
     return this.client.get<Post>(`${this.baseUrl}/posts/${id}`);
+  }
+
+  getCategories(): Observable<Category[]>{
+    return this.client.get<Category[]>(`${this.baseUrl}/categories`);
+  }
+
+  getCategory(id: number): Observable<Category> {
+    return this.client.get<Category>(`${this.baseUrl}/categories/${id}`);
   }
 
   createPost(post: Post) {

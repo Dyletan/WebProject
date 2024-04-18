@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule} from '@angular/router';
-import { CommonModule } from '@angular/common';
 import {routes} from "./app.routes";
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -16,6 +15,7 @@ import { AllPostsComponent } from './all-posts/all-posts.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PostComponent } from './post/post.component';
 import { AboutComponent } from './about/about.component';
+import {PostFormComponent} from "./post-form/post-form.component";
 
 @NgModule({
   imports: [
@@ -32,13 +32,16 @@ import { AboutComponent } from './about/about.component';
     AllPostsComponent,
     NavbarComponent,
     PostComponent,
-    AboutComponent
-
+    AboutComponent,
+    PostFormComponent
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
+  exports: [
+    NavbarComponent
   ],
   bootstrap: [AppComponent],
-  
+
 })
 export class AppModule { }

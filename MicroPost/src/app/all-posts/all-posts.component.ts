@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { Post } from '../models';
+import { Post } from '../models/post';
 import {PostsService} from "../services/posts.service";
 import {CommonModule} from "@angular/common";
 import {PostComponent} from "../post/post.component";
@@ -19,7 +19,7 @@ export class AllPostsComponent implements OnInit{
   ngOnInit() {
     this.getPosts();
   }
-  
+
   getPosts() {
     this.postsService.getPosts().subscribe((posts) => {
       this.posts = posts;
