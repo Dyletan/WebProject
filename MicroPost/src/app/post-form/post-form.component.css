@@ -1,14 +1,19 @@
+*{
+  position: relative;
+  top: 3px;
+}
+
 .form-header {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 /*!* CSS for FormPost Component *!*/
-/*.form-post {*/
-/*  display: flex;*/
+/* .form-post {*/
+ /* display: flex;*/
 /*  flex-direction: column;*/
-/*  align-items: flex-start;*/
-/*  padding: 10px;*/
+/*  align-items: flex-start; */
+/*  padding: 10px; */
 /*}*/
 
 .username {
