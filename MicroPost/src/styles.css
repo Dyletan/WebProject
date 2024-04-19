@@ -1,3 +1,38 @@
 body{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(249, 248, 249);
+    color: rgb(83, 69, 119);
+}
+
+button{
+    color: white;
+    background-color: rgb(83, 69, 119);
+    border: solid 1px rgb(83, 69, 119);
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+button:hover{
+    background-color: rgb(65, 53, 93);
+}
+
+input{
+    border: solid 1px rgb(172, 158, 205);
+}
+
+::placeholder{
+    color: rgb(172, 158, 205);
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+a:active{
+    color: rgb(26, 21, 37);
+}
+
+input:focus{
+    outline: none;
+    border: solid 1px rgb(57, 46, 82);
 }

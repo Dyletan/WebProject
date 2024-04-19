@@ -1,5 +1,11 @@
-<div>
-    <h2>Login</h2>
+<div class="banner">
+
+</div>
+<div class="inscription">
+    <h2>Share a piece of yourself with the world</h2>
+</div>
+<div class="login-container">
+    <h1>MicroPost</h1>
     <div *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</div>
     <input [(ngModel)]="credentials.username" placeholder="Username">
     <input [(ngModel)]="credentials.password" placeholder="Password" type="password">
