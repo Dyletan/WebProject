@@ -12,6 +12,7 @@ from rest_framework.response import Response
 
 from .serializers import *
 
+#FBV login and register
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
@@ -39,21 +40,7 @@ def register(request):
     else:
         return Response({'status': 'error', 'message': 'Invalid request method.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-
-# FBV
-@api_view(['GET'])
-def post_list(request):
-    posts = Post.objects.all()
-    serializer = PostSerializer(posts, many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def post_detail(request, pk):
-    post = Post.objects.get(id=pk)
-    serializer = PostSerializer(post, many=False)
-    return Response(serializer.data)
-
-# CBV
+# CBV post
 from rest_framework.views import APIView
 
 class Post(APIView):
@@ -67,3 +54,36 @@ class PostDetail(APIView):
         post = Post.objects.get(id=pk)
         serializer = PostSerializer(post, many=False)
         return Response(serializer.data)
+
+#FBV category
+@api_view(['GET'])
+def list_category(request):
+    if request=='GET':
+        category = Category.objects.all()
+        serializer = CategorySerializer(category, many=True)
+        return Response(serializer.data)
+    
+@api_view(['GET'])
+def category(request, id=None):
+    try:
+        category = Category.objects.get(id = id)
+    except Category.DoesNotExist as e:
+        return Response({"Error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    if request.method == "GET":
+        serializer = CategorySerializer(category)
+        return Response(serializer.data)
+
+
+#FBV comment
+@api_view(['GET', 'POST'])
+def comment(request):
+    if request=='GET':
+        comments = Comment.objects.all()
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+    if request.method == "POST":
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

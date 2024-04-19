@@ -51,6 +51,15 @@
     transform: translate(-50%, -50%);
 }
 
+@media screen and (max-width: 1100px) {
+    .inscription{
+        display: none;
+    }
+    .login-container{
+        left: 50%;
+    }
+}
+
 .login-container button {
     padding: 8px;
     margin: 10px;
