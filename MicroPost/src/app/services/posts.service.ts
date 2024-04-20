@@ -9,12 +9,12 @@ import {Category} from "../models/category";
 })
 export class PostsService {
 
-  private baseUrl = '';
+  private baseUrl = 'http://127.0.0.1:8000/api';
   constructor(private client: HttpClient) { }
 
-  getUserPosts(user_id: number): Observable<Post[]> {
-    return this.client.get<Post[]>(`${this.baseUrl}/users/${user_id}/posts`);
-  }
+  // getUserPosts(user_id: number): Observable<Post[]> {
+  //   return this.client.get<Post[]>(`${this.baseUrl}/users/${user_id}/posts`);
+  // }
 
   getPosts(): Observable<Post[]>{
     return this.client.get<Post[]>(`${this.baseUrl}/posts`);
@@ -36,7 +36,6 @@ export class PostsService {
     return this.client.post<Post>(`${this.baseUrl}/posts/`, post);
   }
 
-  // maybe use post.id as argument, instead of whole post
   deletePost(id: number): Observable<any> {
     return this.client.delete(`${this.baseUrl}/posts/${id}`)
   }

@@ -1,14 +1,22 @@
 <div *ngIf="updateMode" class="post">
     <div class="post-header">
       <!-- <img src="" alt="Profile Picture"> -->
-      <h2>{{ post.username }}</h2>
-      <h3>Category: {{ post.category_id}}</h3>
+      <h2>{{ post.user }}</h2>
+      <div class="category-select">
+        <h3>Category: </h3>
+        <select [(ngModel)]="post.category" name="category">
+          <option *ngFor="let category of categories" [value]="category">{{category.name}}</option>
+        </select>
+      </div>
     </div>
     <div class="post-content">
       <textarea [(ngModel)]="updatedContent" placeholder="Update content"></textarea>
     </div>
+    <div class="post-date">
+      <p>{{post.created_at}} </p>
+    </div>
     <div class="post-buttons">
-      <button class="post-button" (click)="savePost()">Update</button>
+      <button class="post-button" (click)="savePost()">Save</button>
       <button class="post-button" (click)="removePost()">Delete</button>
     </div>
   </div>
@@ -16,14 +24,17 @@
   <div *ngIf="!updateMode" class="post">
     <div class="post-header">
       <!-- <img src="" alt="Profile Picture"> -->
-      <h2>{{ post.username }}</h2>
-      <h3>Category: {{ post.category_id }}</h3>
+      <h2>{{ post.user}}</h2>
+      <h3>Category: {{ post.category}}</h3>
     </div>
     <div class="post-content">
       <p>{{ post.content }}</p>
     </div>
+    <div class="post-date">
+      <p>{{post.created_at}} </p>
+    </div>
     <div class="post-buttons">
       <button class="post-button" (click)="updatePost()">Update</button>
-      <button class="post-button" (click)="removePost()">Delete</button>
+      <!-- <button class="post-button" (click)="removePost()">Delete</button> -->
     </div>
   </div>

@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
+
 from .serializers import *
 
 #FBV login and register
@@ -43,30 +44,53 @@ def register(request):
 # CBV post
 from rest_framework.views import APIView
 
-class Post(APIView):
-    def get(self, request):
+@api_view(['GET', 'POST'])
+def posts_list(request):
+    if request.method == 'GET':
         posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True)
+        serializers = PostSerializer(posts, many=True)
+        return Response(serializers.data)
+    elif request.method == "POST":
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user, status=status.HTTP_201_CREATED)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'DELETE', 'PUT'])
+def post_detail(request, pk):
+    try:
+        post = Post.objects.get(id=pk)
+    except Post.DoesNotExist:
+        return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "GET":
+        serializer = PostSerializer(post)
         return Response(serializer.data)
 
-class PostDetail(APIView):
-    def get(self, request, pk):
-        post = Post.objects.get(id=pk)
-        serializer = PostSerializer(post, many=False)
-        return Response(serializer.data)
+    elif request.method == "PUT":
+        serializer = PostSerializer(instance=post, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == "DELETE":
+        post.delete()
+        return Response({"deleted": True})
 
 #FBV category
 @api_view(['GET'])
-def list_category(request):
-    if request=='GET':
-        category = Category.objects.all()
-        serializer = CategorySerializer(category, many=True)
+def categories_list(request):
+    if request.method == 'GET':
+        categories = Category.objects.all()
+        serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
     
 @api_view(['GET'])
-def category(request, id=None):
+def category_detail(request, pk):
     try:
-        category = Category.objects.get(id = id)
+        category = Category.objects.get(id = pk)
     except Category.DoesNotExist as e:
         return Response({"Error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
     if request.method == "GET":

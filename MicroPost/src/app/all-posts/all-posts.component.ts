@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import { Post } from '../models/post';
 import {PostsService} from "../services/posts.service";
-import {CommonModule} from "@angular/common";
-import {PostComponent} from "../post/post.component";
+import { Category } from '../models/category';
 import {ActivatedRoute, RouterLink} from "@angular/router";
+import { Observable, forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-all-posts',
@@ -24,5 +25,5 @@ export class AllPostsComponent implements OnInit{
     this.postsService.getPosts().subscribe((posts) => {
       this.posts = posts;
     });
-}
+  }
 }
