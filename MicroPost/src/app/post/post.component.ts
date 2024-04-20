@@ -5,6 +5,7 @@ import { NgIf } from "@angular/common";
 import { PostsService } from "../services/posts.service";
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { Category } from '../models/category';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-post',
@@ -15,7 +16,7 @@ import { Category } from '../models/category';
 export class PostComponent implements OnInit {
   post!: Post;
   updateMode = false;
-  updatedContent = "";
+  // updatedContent = "";
   categories: Category[] = [];
 
   constructor(private postsService: PostsService, private route: ActivatedRoute, private router: Router) { }
@@ -30,7 +31,10 @@ export class PostComponent implements OnInit {
       const post_id = Number(params.get('post_id'));
       this.postsService.getPost(post_id).subscribe((post) => {
         this.post = post;
-        this.updatedContent = this.post.content;
+        // this.updatedContent = this.post.content;
+        this.getUser(this.post.user).subscribe(user => {
+          this.post.userDetails = user;
+        });
       });
     });
   }
@@ -47,8 +51,8 @@ export class PostComponent implements OnInit {
   }
 
   savePost() {
-    this.post.content = this.updatedContent;
-    this.postsService.putPost(this.post).subscribe();
+    const newContent = this.post.content; // Assuming this is the content from the textarea
+    this.postsService.putPost({...this.post, content: newContent}).subscribe();
     this.updateMode = !this.updateMode;
   }
 
@@ -68,5 +72,14 @@ export class PostComponent implements OnInit {
     } else {
       return 'Category Not Found';
     }
+  }
+
+  getUser(userId: string): Observable<any> {
+    return this.postsService.getUser(+userId);
+  }
+
+  isCurrentUserAuthor(): boolean {
+    const loggedInUsername = localStorage.getItem('username');
+    return loggedInUsername === this.post.userDetails?.username;
   }
 }

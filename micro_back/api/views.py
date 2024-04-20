@@ -79,6 +79,15 @@ def post_detail(request, pk):
         post.delete()
         return Response({"deleted": True})
 
+@api_view(['GET'])
+def user_detail(request, pk):
+    try:
+        user = User.objects.get(id = pk)
+    except User.DoesNotExist as e:
+        return Response({"Error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    if request.method == "GET":
+        return JsonResponse({"id": user.id, "username": user.username}, status=status.HTTP_200_OK)
+
 #FBV category
 @api_view(['GET'])
 def categories_list(request):

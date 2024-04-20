@@ -43,4 +43,8 @@ export class PostsService {
   putPost(post: Post): Observable<Post> {
     return this.client.put<Post>(`${this.baseUrl}/posts/${post.id}`, post);
   }
+
+  getUser(id: number): Observable<any> {
+    return this.client.get<any>(`${this.baseUrl}/users/${id}`);
+  }
 }

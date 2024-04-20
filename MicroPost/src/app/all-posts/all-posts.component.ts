@@ -22,12 +22,22 @@ export class AllPostsComponent implements OnInit{
     this.getPosts();
     this.getCategories();
   }
-
+  
   getPosts() {
     this.postsService.getPosts().subscribe((posts) => {
       this.posts = posts;
+      posts.forEach(post => {
+        this.getUser(post.user).subscribe(user => {
+          post.userDetails = user;
+        });
+      });
     });
   }
+  // getPosts() {
+  //   this.postsService.getPosts().subscribe((posts) => {
+  //     this.posts = posts;
+  //   });
+  // }
 
   getCategories() {
     this.postsService.getCategories().subscribe((categories) => {
@@ -45,6 +55,10 @@ export class AllPostsComponent implements OnInit{
     } else {
       return 'Category Not Found';
     }
+  }
+
+  getUser(userId: string): Observable<any> {
+    return this.postsService.getUser(+userId);
   }
   
 }

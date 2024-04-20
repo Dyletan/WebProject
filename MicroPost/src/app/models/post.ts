@@ -1,4 +1,5 @@
 import { Category } from "./category";
+import { UserDetails } from "./user_detail";
 
 export interface Post {
     id: number;
@@ -7,4 +8,5 @@ export interface Post {
     category: string;
     user: string;
     created_at: string;
+    userDetails?: UserDetails;
 }

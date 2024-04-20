@@ -8,5 +8,6 @@ urlpatterns = [
     path('posts', posts_list, name='posts_list'),
     path('posts/<int:pk>', post_detail, name='posts_detail'),
     path('categories', categories_list, name='categories_list'),
-    path('categories/<int:pk>', category_detail, name='category_detail')
+    path('categories/<int:pk>', category_detail, name='category_detail'),
+    path('users/<int:pk>', user_detail, name='user_detail')
 ]
