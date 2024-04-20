@@ -5,7 +5,7 @@
         <div class="post-header">
     <!--      <img src="" alt="Profile Picture">-->
           <h2> {{post.user}}</h2>
-          <p> Category: {{post.category.name}}</p>
+          <p> Category: {{getPostCategory(+post.category)}}</p>
           <p> Title: {{post.title}} </p>
         </div>
         <div class="post-content">

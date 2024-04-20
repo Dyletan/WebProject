@@ -4,7 +4,7 @@ export interface Post {
     id: number;
     title: string;
     content: string;
-    category: Category;
+    category: string;
     user: string;
     created_at: string;
 }

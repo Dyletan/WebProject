@@ -48,7 +48,6 @@ export class PostComponent implements OnInit {
 
   savePost() {
     this.post.content = this.updatedContent;
-    this
     this.postsService.putPost(this.post).subscribe();
     this.updateMode = !this.updateMode;
   }
@@ -57,5 +56,17 @@ export class PostComponent implements OnInit {
     this.postsService.getCategories().subscribe(categories => {
       this.categories = categories;
     });
+  }
+
+  getPostCategory(category_id: number): string {
+    const category: Category | undefined = this.categories.find((category) => {
+      return category.id === +category_id;
+    });
+    console.log()
+    if (category && category.name) {
+      return category.name;
+    } else {
+      return 'Category Not Found';
+    }
   }
 }

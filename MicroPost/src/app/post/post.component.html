@@ -5,7 +5,7 @@
       <div class="category-select">
         <h3>Category: </h3>
         <select [(ngModel)]="post.category" name="category">
-          <option *ngFor="let category of categories" [value]="category">{{category.name}}</option>
+          <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
         </select>
       </div>
     </div>
@@ -25,7 +25,7 @@
     <div class="post-header">
       <!-- <img src="" alt="Profile Picture"> -->
       <h2>{{ post.user}}</h2>
-      <h3>Category: {{ post.category}}</h3>
+      <h3>Category: {{getPostCategory(+post.category)}}</h3>
     </div>
     <div class="post-content">
       <p>{{ post.content }}</p>

@@ -4,7 +4,7 @@ import {PostsService} from "../services/posts.service";
 import { Category } from '../models/category';
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import { Observable, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-all-posts',
@@ -14,11 +14,13 @@ import { map } from 'rxjs/operators';
 
 export class AllPostsComponent implements OnInit{
   posts!: Post[];
+  categories!: Category[];
 
   constructor(private postsService: PostsService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.getPosts();
+    this.getCategories();
   }
 
   getPosts() {
@@ -26,4 +28,23 @@ export class AllPostsComponent implements OnInit{
       this.posts = posts;
     });
   }
+
+  getCategories() {
+    this.postsService.getCategories().subscribe((categories) => {
+      this.categories=categories;
+    });
+  }
+
+  getPostCategory(category_id: number): string {
+    const category: Category | undefined = this.categories.find((category) => {
+      return category.id === +category_id;
+    });
+    console.log()
+    if (category && category.name) {
+      return category.name;
+    } else {
+      return 'Category Not Found';
+    }
+  }
+  
 }

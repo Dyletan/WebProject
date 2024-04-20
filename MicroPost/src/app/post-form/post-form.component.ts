@@ -9,7 +9,7 @@ import { PostsService } from '../services/posts.service';
   styleUrls: ['./post-form.component.css']
 })
 export class PostFormComponent implements OnInit {
-  post: Post = {id: 0, title: '', content: '', category: { id: 0, name: '' }, user: '', created_at: ''};
+  post: Post = {id: 0, title: '', content: '', category: '', user: '', created_at: ''};
   categories: Category[] = [];
 
   constructor(private postService: PostsService) { }
@@ -18,7 +18,7 @@ export class PostFormComponent implements OnInit {
     this.postService.createPost(this.post).subscribe(response => {
       console.log(response);
       // Reset the form
-      this.post = {id: 0, title: '', content: '', category: { id: 0, name: '' }, user: '', created_at: ''};
+      this.post = {id: 0, title: '', content: '', category: '', user: '', created_at: ''};
     });
   }
   ngOnInit() {
