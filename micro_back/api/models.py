@@ -12,6 +12,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
@@ -20,7 +24,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return f"ID: {self.id}, Name: {self.title}, User: {self.user}"
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)

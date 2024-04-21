@@ -4,11 +4,15 @@
       <a [routerLink]="['/all-posts', post.id]">
         <div class="post-header">
     <!--      <img src="" alt="Profile Picture">-->
-          <h2> {{post.username}}</h2>
-          <h3> Category: {{post.category_id}}</h3>
+          <h2>{{ post.userDetails?.username || 'User Not Found' }}</h2>
+          <p> Category: {{getPostCategory(+post.category)}}</p>
         </div>
         <div class="post-content">
+          <h3>Title: {{post.title}} </h3>
           <p>{{post.content}}</p>
+        </div>
+        <div class="post-date">
+          <p>{{post.created_at}} </p>
         </div>
       </a>
     </div>

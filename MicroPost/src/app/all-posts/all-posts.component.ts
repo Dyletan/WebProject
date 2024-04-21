@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import { Post } from '../models/post';
 import {PostsService} from "../services/posts.service";
-import {CommonModule} from "@angular/common";
-import {PostComponent} from "../post/post.component";
+import { Category } from '../models/category';
 import {ActivatedRoute, RouterLink} from "@angular/router";
+import { Observable, forkJoin } from 'rxjs';
+import { first, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-all-posts',
@@ -13,16 +14,51 @@ import {ActivatedRoute, RouterLink} from "@angular/router";
 
 export class AllPostsComponent implements OnInit{
   posts!: Post[];
+  categories!: Category[];
 
   constructor(private postsService: PostsService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.getPosts();
+    this.getCategories();
   }
-
+  
   getPosts() {
     this.postsService.getPosts().subscribe((posts) => {
       this.posts = posts;
+      posts.forEach(post => {
+        this.getUser(post.user).subscribe(user => {
+          post.userDetails = user;
+        });
+      });
     });
-}
+  }
+  // getPosts() {
+  //   this.postsService.getPosts().subscribe((posts) => {
+  //     this.posts = posts;
+  //   });
+  // }
+
+  getCategories() {
+    this.postsService.getCategories().subscribe((categories) => {
+      this.categories=categories;
+    });
+  }
+
+  getPostCategory(category_id: number): string {
+    const category: Category | undefined = this.categories.find((category) => {
+      return category.id === +category_id;
+    });
+    console.log()
+    if (category && category.name) {
+      return category.name;
+    } else {
+      return 'Category Not Found';
+    }
+  }
+
+  getUser(userId: string): Observable<any> {
+    return this.postsService.getUser(+userId);
+  }
+  
 }
