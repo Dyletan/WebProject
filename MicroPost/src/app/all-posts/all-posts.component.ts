@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import { Post } from '../models/post';
+import {Post} from '../models/post';
 import {PostsService} from "../services/posts.service";
-import { Category } from '../models/category';
+import {Category} from '../models/category';
 import {ActivatedRoute, RouterLink} from "@angular/router";
-import { Observable, forkJoin } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import {Observable, forkJoin} from 'rxjs';
+import {first, map} from 'rxjs/operators';
+import {UserService} from "../services/user.service";
+import {UserDetails} from "../models/user_detail";
 
 @Component({
   selector: 'app-all-posts',
@@ -12,17 +14,18 @@ import { first, map } from 'rxjs/operators';
   styleUrl: './all-posts.component.css'
 })
 
-export class AllPostsComponent implements OnInit{
+export class AllPostsComponent implements OnInit {
   posts!: Post[];
   categories!: Category[];
 
-  constructor(private postsService: PostsService, private route: ActivatedRoute) {}
+  constructor(private postsService: PostsService, private route: ActivatedRoute, private userService: UserService) {
+  }
 
   ngOnInit() {
     this.getPosts();
     this.getCategories();
   }
-  
+
   getPosts() {
     this.postsService.getPosts().subscribe((posts) => {
       this.posts = posts;
@@ -33,15 +36,10 @@ export class AllPostsComponent implements OnInit{
       });
     });
   }
-  // getPosts() {
-  //   this.postsService.getPosts().subscribe((posts) => {
-  //     this.posts = posts;
-  //   });
-  // }
 
   getCategories() {
     this.postsService.getCategories().subscribe((categories) => {
-      this.categories=categories;
+      this.categories = categories;
     });
   }
 
@@ -57,8 +55,7 @@ export class AllPostsComponent implements OnInit{
     }
   }
 
-  getUser(userId: string): Observable<any> {
+  getUser(userId: number): Observable<any> {
     return this.postsService.getUser(+userId);
   }
-  
 }

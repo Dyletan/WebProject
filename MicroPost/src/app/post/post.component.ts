@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
 export class PostComponent implements OnInit {
   post!: Post;
   updateMode = false;
-  // updatedContent = "";
+  updatedContent = "";
   categories: Category[] = [];
 
   constructor(private postsService: PostsService, private route: ActivatedRoute, private router: Router) { }
@@ -31,7 +31,7 @@ export class PostComponent implements OnInit {
       const post_id = Number(params.get('post_id'));
       this.postsService.getPost(post_id).subscribe((post) => {
         this.post = post;
-        // this.updatedContent = this.post.content;
+        this.updatedContent = this.post.content;
         this.getUser(this.post.user).subscribe(user => {
           this.post.userDetails = user;
         });
@@ -44,10 +44,12 @@ export class PostComponent implements OnInit {
   }
 
   removePost() {
-    this.postsService.deletePost(this.post.id).subscribe(() => {
-      // Navigate to home page after successful deletion
-      this.router.navigate(['all-posts']);
-    });
+    if(this.post.id) {
+      this.postsService.deletePost(this.post.id).subscribe(() => {
+        // Navigate to home page after successful deletion
+        this.router.navigate(['all-posts']);
+      });
+    }
   }
 
   savePost() {
@@ -74,7 +76,7 @@ export class PostComponent implements OnInit {
     }
   }
 
-  getUser(userId: string): Observable<any> {
+  getUser(userId: number): Observable<any> {
     return this.postsService.getUser(+userId);
   }
 

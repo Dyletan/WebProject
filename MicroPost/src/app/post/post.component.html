@@ -10,8 +10,6 @@
       </div>
     </div>
     <div class="post-content">
-      <h3>Title: </h3>
-      <textarea [(ngModel)]="post.title" placeholder="Update title"></textarea>
       <textarea [(ngModel)]="post.content" placeholder="Update content"></textarea>
     </div>
     <div class="post-date">
@@ -22,7 +20,7 @@
       <button class="post-button" (click)="removePost()">Delete</button>
     </div>
   </div>
-  
+
   <div *ngIf="!updateMode" class="post">
     <div class="post-header">
       <!-- <img src="" alt="Profile Picture"> -->
@@ -30,7 +28,6 @@
       <p>Category: {{getPostCategory(+post.category)}}</p>
     </div>
     <div class="post-content">
-      <h3>Title: {{post.title}} </h3>
       <p>{{ post.content }}</p>
     </div>
     <div class="post-date">

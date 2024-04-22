@@ -2,11 +2,10 @@ import { Category } from "./category";
 import { UserDetails } from "./user_detail";
 
 export interface Post {
-    id: number;
-    title: string;
+    id?: number;
     content: string;
     category: string;
-    user: string;
-    created_at: string;
+    user: number;
+    created_at?: string;
     userDetails?: UserDetails;
 }

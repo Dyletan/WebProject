@@ -9,21 +9,31 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework.views import APIView
 
 
 from .serializers import *
 
-#FBV login and register
+
+def get_token_for_user(user):
+    custom_access_token = AccessToken.for_user(user)
+    custom_access_token.set_exp(str(1913801536))
+    return {
+        'access': str(custom_access_token),
+    }
+
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
     if request.method == 'POST':
         username = request.data.get('username')
         password = request.data.get('password')
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(username=username, password=password)
         if user is not None:
-            token, created = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key})
+            token = get_token_for_user(user)
+            return Response(token)
         else:
             return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -41,10 +51,17 @@ def register(request):
     else:
         return Response({'status': 'error', 'message': 'Invalid request method.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-# CBV post
-from rest_framework.views import APIView
+
+@api_view(['POST'])
+def create_post(request):
+    serializer = PostSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
 def posts_list(request):
     if request.method == 'GET':
         posts = Post.objects.all()
@@ -53,9 +70,11 @@ def posts_list(request):
     elif request.method == "POST":
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=request.user, status=status.HTTP_201_CREATED)
-            return Response(serializer.data)
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 @api_view(['GET', 'DELETE', 'PUT'])
 def post_detail(request, pk):
@@ -86,7 +105,7 @@ def user_detail(request, pk):
     except User.DoesNotExist as e:
         return Response({"Error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
     if request.method == "GET":
-        return JsonResponse({"id": user.id, "username": user.username}, status=status.HTTP_200_OK)
+        return Response({"id": user.id, "username": user.username}, status=status.HTTP_200_OK)
 
 #FBV category
 @api_view(['GET'])

@@ -17,14 +17,13 @@ class Category(models.Model):
         verbose_name_plural = "Categories"
 
 class Post(models.Model):
-    title = models.CharField(max_length=200)
     content = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"ID: {self.id}, Name: {self.title}, User: {self.user}"
+        return self.content
 
 
 class Comment(models.Model):

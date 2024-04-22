@@ -33,7 +33,7 @@ export class PostsService {
   }
 
   createPost(post: Post) {
-    return this.client.post<Post>(`${this.baseUrl}/posts/`, post);
+    return this.client.post<Post>(`${this.baseUrl}/posts`, post);
   }
 
   deletePost(id: number): Observable<any> {
