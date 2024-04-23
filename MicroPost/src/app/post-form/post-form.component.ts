@@ -1,30 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import { Post } from '../models/post';
-import { Category } from '../models/category';
-import { PostsService } from '../services/posts.service';
+import {Component, OnInit} from '@angular/core';
+import {Post} from '../models/post';
+import {Category} from '../models/category';
+import {PostsService} from '../services/posts.service';
 import {UserService} from "../services/user.service";
+
 @Component({
   selector: 'app-post-form',
   templateUrl: './post-form.component.html',
   styleUrls: ['./post-form.component.css']
 })
+
 export class PostFormComponent implements OnInit {
-  post: Post = {content: '', category: '', user: 0};
+  post: Post = {content: '', category: 0, user: 0};
   categories!: Category[];
   username!: string;
 
+  constructor(private postService: PostsService, private userService: UserService) {
+  }
 
-  constructor(private postService: PostsService, private userService: UserService) { }
   ngOnInit() {
     this.getCategories();
     this.getUserInfo();
   }
 
+  getCategories() {
+    this.postService.getCategories().subscribe(categories => {
+      this.categories = categories;
+      if (this.categories.length > 0 && this.categories[0].id) {
+        this.post.category = this.categories[0].id;
+      }
+    });
+  }
+
   onSubmit() {
-    if(this.post.content) {
+    if (this.post.content) {
       this.postService.createPost(this.post).subscribe(response => {
-        let user_id = this.post.user
-        this.post = {content: '', category: '', user: user_id, created_at: ''};
+        this.post = {content: '', category: this.post.category, user: this.post.user, created_at: ''};
       });
     }
   }
@@ -40,12 +51,6 @@ export class PostFormComponent implements OnInit {
         console.error('Error fetching user info:', error);
       }
     );
-  }
-
-  getCategories() {
-    this.postService.getCategories().subscribe(categories => {
-      this.categories = categories;
-    });
   }
 }
 

@@ -15,7 +15,7 @@ import {UserService} from "../services/user.service";
 })
 
 export class PostComponent implements OnInit {
-  post: Post = {content: '', category: '', user: 0};
+  post: Post = {content: '', category: 0, user: 0};
   updateMode = false;
   updatedContent = "";
   categories: Category[] = [];

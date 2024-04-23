@@ -1,6 +1,6 @@
 <div class="form-header">
   <div class="username">{{ this.username }}</div>
-  <select [(ngModel)]="post.category" name="category">
+  <select [(ngModel)]="this.post.category" name="category">
     <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
   </select>
 </div>
@@ -8,5 +8,3 @@
 <br>
 <button class="post-button" type="submit" (click)="onSubmit()">Post</button>
 <hr>
-
-
