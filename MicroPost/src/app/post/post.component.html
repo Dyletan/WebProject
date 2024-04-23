@@ -1,41 +1,43 @@
-<div *ngIf="updateMode; else elseBlock" class="post">
-  <div class="post-header">
-    <!-- <img src="" alt="Profile Picture"> -->
-    <h2>{{ post.username || 'User Not Found' }}</h2>
-    <div class="category-select">
-      <p>Category: </p>
-      <select [(ngModel)]="post.category" name="category">
-        <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
-      </select>
-    </div>
-  </div>
-  <div class="post-content">
-    <textarea [(ngModel)]="post.content" placeholder="Update content"></textarea>
-  </div>
-  <div class="post-date">
-    <p>{{ post.created_at }} </p>
-  </div>
-  <div class="post-buttons">
-    <button class="post-button" (click)="savePost()">Save</button>
-    <button class="post-button" (click)="removePost()">Delete</button>
-  </div>
-</div>
-<ng-template #elseBlock>
-  <div class="post">
+<div class="centralize">
+  <div *ngIf="updateMode; else elseBlock" class="post">
     <div class="post-header">
       <!-- <img src="" alt="Profile Picture"> -->
       <h2>{{ post.username || 'User Not Found' }}</h2>
-      <p>Category: {{ getPostCategory(+post.category) }}</p>
+      <div class="category-select">
+        <p>Category: </p>
+        <select [(ngModel)]="post.category" name="category">
+          <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+        </select>
+      </div>
     </div>
     <div class="post-content">
-      <p>{{ post.content }}</p>
+      <textarea [(ngModel)]="post.content" placeholder="Update content"></textarea>
     </div>
     <div class="post-date">
       <p>{{ post.created_at }} </p>
     </div>
-    <div *ngIf="isCurrentUserAuthor()" class="post-buttons">
-      <button class="post-button" (click)="updatePost()">Update</button>
+    <div class="post-buttons">
+      <button class="post-button" (click)="savePost()">Save</button>
       <button class="post-button" (click)="removePost()">Delete</button>
     </div>
   </div>
-</ng-template>
+  <ng-template #elseBlock>
+    <div class="post">
+      <div class="post-header">
+        <!-- <img src="" alt="Profile Picture"> -->
+        <h2>{{ post.username || 'User Not Found' }}</h2>
+        <p>Category: {{ getPostCategory(+post.category) }}</p>
+      </div>
+      <div class="post-content">
+        <p>{{ post.content }}</p>
+      </div>
+      <div class="post-date">
+        <p>{{ post.created_at }} </p>
+      </div>
+      <div *ngIf="isCurrentUserAuthor()" class="post-buttons">
+        <button class="post-button" (click)="updatePost()">Update</button>
+        <button class="post-button" (click)="removePost()">Delete</button>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -36,3 +36,13 @@ input:focus{
     outline: none;
     border: solid 1px rgb(57, 46, 82);
 }
+
+.centralize {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.centralize > * {
+  width: 30%;
+}
