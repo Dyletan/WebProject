@@ -4,6 +4,7 @@ from api.views.category import *
 from api.views.comment import *
 from api.views.post import *
 from api.views.user import *
+from api.views.like import *
 
 urlpatterns = [
     path('register', register, name='register'),
@@ -14,4 +15,6 @@ urlpatterns = [
     path('categories', categories_list, name='categories_list'),
     path('categories/<int:pk>', category_detail, name='category_detail'),
     path('users/<int:pk>', user_detail, name='user_detail'),
+    path('posts/<int:pk>/likes', likes_list, name='likes_list'),
+    path('posts/<int:post_id>/users/<int:user_id>', check_like)
 ]

@@ -15,5 +15,9 @@
           <p>{{post.created_at}} </p>
         </div>
       </a>
+      <div *ngIf="post.id !== undefined" class="likes">
+        <p>Likes: {{likesCounts[(post.id)]}}</p>
+        <button class="post-button" (click)="putLike(+post.id)">Like</button>
+      </div>
     </div>
 </div>

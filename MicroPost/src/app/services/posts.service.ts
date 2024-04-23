@@ -3,6 +3,7 @@ import {Post} from "../models/post";
 import {HttpClient} from "@angular/common/http";
 import {Observable, map} from "rxjs";
 import {Category} from "../models/category";
+import { Like } from '../models/like';
 
 @Injectable({
   providedIn: 'root'
