@@ -6,6 +6,7 @@ import { PostsService } from "../services/posts.service";
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { Category } from '../models/category';
 import { Observable } from 'rxjs';
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-post',
@@ -14,12 +15,12 @@ import { Observable } from 'rxjs';
 })
 
 export class PostComponent implements OnInit {
-  post!: Post;
+  post: Post = {content: '', category: '', user: 0};
   updateMode = false;
   updatedContent = "";
   categories: Category[] = [];
 
-  constructor(private postsService: PostsService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private postsService: PostsService, private userService: UserService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.getPost()
@@ -32,9 +33,6 @@ export class PostComponent implements OnInit {
       this.postsService.getPost(post_id).subscribe((post) => {
         this.post = post;
         this.updatedContent = this.post.content;
-        this.getUser(this.post.user).subscribe(user => {
-          this.post.userDetails = user;
-        });
       });
     });
   }
@@ -68,7 +66,6 @@ export class PostComponent implements OnInit {
     const category: Category | undefined = this.categories.find((category) => {
       return category.id === +category_id;
     });
-    console.log()
     if (category && category.name) {
       return category.name;
     } else {
@@ -76,12 +73,8 @@ export class PostComponent implements OnInit {
     }
   }
 
-  getUser(userId: number): Observable<any> {
-    return this.postsService.getUser(+userId);
-  }
 
   isCurrentUserAuthor(): boolean {
-    const loggedInUsername = localStorage.getItem('username');
-    return loggedInUsername === this.post.userDetails?.username;
+    return this.post.user === this.userService.get_user_id();
   }
 }

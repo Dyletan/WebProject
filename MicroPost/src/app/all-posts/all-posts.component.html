@@ -4,7 +4,7 @@
       <a [routerLink]="['/all-posts', post.id]">
         <div class="post-header">
     <!--      <img src="" alt="Profile Picture">-->
-          <h2>{{ post.userDetails?.username || 'User Not Found' }}</h2>
+          <h2>{{ post.username || 'User Not Found' }}</h2>
           <p> Category: {{getPostCategory(+post.category)}}</p>
         </div>
         <div class="post-content">

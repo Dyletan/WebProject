@@ -7,5 +7,5 @@ export interface Post {
     category: string;
     user: number;
     created_at?: string;
-    userDetails?: UserDetails;
+    username?: string;
 }

@@ -23,7 +23,6 @@ export class PostFormComponent implements OnInit {
   onSubmit() {
     if(this.post.content) {
       this.postService.createPost(this.post).subscribe(response => {
-        console.log(response);
         let user_id = this.post.user
         this.post = {content: '', category: '', user: user_id, created_at: ''};
       });
@@ -48,7 +47,6 @@ export class PostFormComponent implements OnInit {
       this.categories = categories;
     });
   }
-  protected readonly localStorage = localStorage;
 }
 
 

@@ -29,11 +29,6 @@ export class AllPostsComponent implements OnInit {
   getPosts() {
     this.postsService.getPosts().subscribe((posts) => {
       this.posts = posts;
-      posts.forEach(post => {
-        this.getUser(post.user).subscribe(user => {
-          post.userDetails = user;
-        });
-      });
     });
   }
 
@@ -53,9 +48,5 @@ export class AllPostsComponent implements OnInit {
     } else {
       return 'Category Not Found';
     }
-  }
-
-  getUser(userId: number): Observable<any> {
-    return this.postsService.getUser(+userId);
   }
 }
