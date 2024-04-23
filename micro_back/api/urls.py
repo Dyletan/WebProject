@@ -1,5 +1,9 @@
 from django.urls import path
-from .views import *
+from api.views.authorization import *
+from api.views.category import *
+from api.views.comment import *
+from api.views.post import *
+from api.views.user import *
 
 urlpatterns = [
     path('register', register, name='register'),
@@ -10,5 +14,4 @@ urlpatterns = [
     path('categories', categories_list, name='categories_list'),
     path('categories/<int:pk>', category_detail, name='category_detail'),
     path('users/<int:pk>', user_detail, name='user_detail'),
-    path('create_post', create_post, name='create_post'),
 ]

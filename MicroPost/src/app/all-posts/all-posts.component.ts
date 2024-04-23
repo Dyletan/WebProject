@@ -28,7 +28,7 @@ export class AllPostsComponent implements OnInit {
 
   getPosts() {
     this.postsService.getPosts().subscribe((posts) => {
-      this.posts = posts;
+      this.posts = posts.reverse();
     });
   }
 
