@@ -4,17 +4,10 @@
 }
 
 .form-header {
-  display: flex;
-  justify-content: space-between;
+  float: right;
   width: 100%;
+  margin-top: 20px;
 }
-/*!* CSS for FormPost Component *!*/
-/* .form-post {*/
- /* display: flex;*/
-/*  flex-direction: column;*/
-/*  align-items: flex-start; */
-/*  padding: 10px; */
-/*}*/
 
 .username {
   font-weight: bold;
@@ -40,4 +33,38 @@
 .post-button {
   padding: 10px 20px;
   cursor: pointer;
+  float: right;
+  width: auto;
+  margin-left: 5px;
+}
+
+.content-form {
+  border: none;
+  width: 80%;
+  resize: none;
+  flex-grow: 1;
+  outline: none;
+}
+
+.post-form {
+  display: flex;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: lightgrey;
+}
+
+select {
+  width: 20%;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+  margin-left: auto;
+  display: block;
 }
