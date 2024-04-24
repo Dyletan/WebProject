@@ -1,14 +1,12 @@
 <div class="centralize">
     <app-post-form></app-post-form>
-    <div *ngFor="let post of posts">
+    <div *ngFor="let post of posts" class="post">
       <a [routerLink]="['/all-posts', post.id]">
         <div class="post-header">
-    <!--      <img src="" alt="Profile Picture">-->
           <h2>{{ post.username || 'User Not Found' }}</h2>
-          <p> Category: {{getPostCategory(+post.category)}}</p>
+          <p> Сategory: {{getPostCategory(+post.category)}}</p>
         </div>
         <div class="post-content">
-<!--          <h3>Title: {{post.title}} </h3>-->
           <p>{{post.content}}</p>
         </div>
         <div class="post-date">

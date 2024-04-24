@@ -1,5 +1,24 @@
-
+*{
+  text-decoration: none;
+}
 
 .centralize > * {
-  width: 30%;
+  width: 40%;
+}
+
+.post{
+  background-color: white;
+  border-radius: 20px;
+  margin: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2)
+}
+
+.post-date{
+  font-size: 12px;
+}
+
+.post-content p{
+  width: 100%;
+  overflow-wrap: break-word;
 }
