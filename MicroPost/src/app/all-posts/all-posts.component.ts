@@ -3,10 +3,9 @@ import {Post} from '../models/post';
 import {PostsService} from "../services/posts.service";
 import {Category} from '../models/category';
 import {ActivatedRoute, RouterLink} from "@angular/router";
-import {Observable, forkJoin} from 'rxjs';
-import {first, map} from 'rxjs/operators';
 import {UserService} from "../services/user.service";
-import {UserDetails} from "../models/user_detail";
+import {LikeService} from '../services/like.service';
+import {Like} from '../models/like';
 
 @Component({
   selector: 'app-all-posts',
@@ -16,9 +15,9 @@ import {UserDetails} from "../models/user_detail";
 
 export class AllPostsComponent implements OnInit {
   posts!: Post[];
-  categories!: Category[];
+  categories: Category[] = [];
 
-  constructor(private postsService: PostsService, private route: ActivatedRoute, private userService: UserService) {
+  constructor(private postsService: PostsService, private route: ActivatedRoute, private userService: UserService, private likeService: LikeService) {
   }
 
   ngOnInit() {
@@ -29,6 +28,18 @@ export class AllPostsComponent implements OnInit {
   getPosts() {
     this.postsService.getPosts().subscribe((posts) => {
       this.posts = posts.reverse();
+      this.posts.forEach(post => {
+        if (post.id) {
+          this.likeService.isPostLiked(post.id).subscribe(
+            (isLiked: boolean) => {
+              post.is_liked = isLiked; // Set is_liked property based on result
+            },
+            (error) => {
+              console.error(`Error checking if post ${post.id} is liked:`, error);
+            }
+          );
+        }
+      });
     });
   }
 
@@ -42,11 +53,35 @@ export class AllPostsComponent implements OnInit {
     const category: Category | undefined = this.categories.find((category) => {
       return category.id === +category_id;
     });
-    console.log()
     if (category && category.name) {
       return category.name;
     } else {
       return 'Category Not Found';
     }
   }
+
+  toggleLike(post: Post): void {
+    if (post.id) {
+      if (post.is_liked) {
+        this.likeService.unlikePost(post.id).subscribe(
+          () => {
+            post.is_liked = false;
+          },
+          (error) => {
+            console.error('Error unliking post:', error);
+          }
+        );
+      } else {
+        this.likeService.likePost(post.id).subscribe(
+          () => {
+            post.is_liked = true;
+          },
+          (error) => {
+            console.error('Error liking post:', error);
+          }
+        );
+      }
+    }
+  }
 }
+

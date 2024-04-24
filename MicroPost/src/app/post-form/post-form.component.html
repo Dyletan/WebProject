@@ -1,8 +1,8 @@
-<div class="form-header">
-  <select [(ngModel)]="this.post.category" name="category">
+
+  <select [(ngModel)]="post.category" name="category" style="margin-top: 20px">
     <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
   </select>
-</div>
+
 <div class="username">{{ this.username }}</div>
 <div class="post-form">
   <textarea class="content-form" [(ngModel)]="post.content" name="content" placeholder="Create post..."></textarea>
