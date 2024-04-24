@@ -1,12 +1,11 @@
 import { Component, OnInit, } from '@angular/core';
 import { Post } from '../models/post';
-import { FormsModule } from "@angular/forms";
-import { NgIf } from "@angular/common";
 import { PostsService } from "../services/posts.service";
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { Category } from '../models/category';
-import { Observable } from 'rxjs';
+import {Comment} from "../models/comment";
 import {UserService} from "../services/user.service";
+import {CommentService} from "../services/comment.service";
 
 @Component({
   selector: 'app-post',
@@ -16,21 +15,25 @@ import {UserService} from "../services/user.service";
 
 export class PostComponent implements OnInit {
   post: Post = {content: '', category: 0, user: 0};
+
+  comments: Comment[] = [];
   updateMode = false;
   updatedContent = "";
   categories: Category[] = [];
+  post_id: number = 0;
 
-  constructor(private postsService: PostsService, private userService: UserService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private postsService: PostsService, private userService: UserService, private route: ActivatedRoute, private router: Router, private commentService: CommentService) { }
 
   ngOnInit() {
     this.getPost()
     this.getCategories()
+    this.getComments()
   }
 
   getPost() {
     this.route.paramMap.subscribe((params) => {
-      const post_id = Number(params.get('post_id'));
-      this.postsService.getPost(post_id).subscribe((post) => {
+      this.post_id = Number(params.get('post_id'));
+      this.postsService.getPost(this.post_id).subscribe((post) => {
         this.post = post;
         this.updatedContent = this.post.content;
       });
@@ -72,7 +75,13 @@ export class PostComponent implements OnInit {
       return 'Category Not Found';
     }
   }
-
+  getComments() {
+    this.commentService.getComments(this.post_id).subscribe(
+      result => {
+        this.comments = result;
+      }
+    )
+  }
 
   isCurrentUserAuthor(): boolean {
     return this.post.user === this.userService.get_user_id();

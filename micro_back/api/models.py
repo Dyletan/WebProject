@@ -25,6 +25,9 @@ class Post(models.Model):
     def __str__(self):
         return self.content
 
+    class Meta:
+        ordering = ['-created_at']
+
 
 class Comment(models.Model):
     content = models.TextField()
@@ -34,6 +37,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+
+    class Meta:
+        ordering = ['-created_at']
 
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

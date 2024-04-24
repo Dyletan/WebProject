@@ -27,7 +27,7 @@ export class AllPostsComponent implements OnInit {
 
   getPosts() {
     this.postsService.getPosts().subscribe((posts) => {
-      this.posts = posts.reverse();
+      this.posts = posts
       this.posts.forEach(post => {
         if (post.id) {
           this.likeService.isPostLiked(post.id).subscribe(

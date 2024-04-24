@@ -16,6 +16,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PostComponent } from './post/post.component';
 import { AboutComponent } from './about/about.component';
 import {PostFormComponent} from "./post-form/post-form.component";
+import {CommentFormComponent} from "./comment-form/comment-form.component";
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import {PostFormComponent} from "./post-form/post-form.component";
     NavbarComponent,
     PostComponent,
     AboutComponent,
-    PostFormComponent
+    PostFormComponent,
+    CommentFormComponent
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

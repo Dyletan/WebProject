@@ -9,7 +9,7 @@ from api.views.like import *
 urlpatterns = [
     path('register', register, name='register'),
     path('login', login, name='login'),
-    path('comment', comment, name='comment'),
+    path('comments/<int:post_id>', comment, name='comment'),
     path('posts', posts_list, name='posts_list'),
     path('posts/<int:pk>', post_detail, name='posts_detail'),
     path('categories', CategoriesList.as_view(), name='categories_list'),

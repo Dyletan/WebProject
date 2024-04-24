@@ -1,0 +1,6 @@
+<div class="username">{{ this.username }}</div>
+<div class="post-form">
+  <textarea class="content-form" [(ngModel)]="comment.content" name="content" placeholder="Create comment..."></textarea>
+  <button class="post-button" type="submit" (click)="onSubmit()">Post</button>
+</div>
+<hr>
