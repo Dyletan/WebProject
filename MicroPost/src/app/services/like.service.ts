@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Like } from '../models/like';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {map, Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,23 +9,20 @@ import { HttpClient } from '@angular/common/http';
 export class LikeService {
 
   private baseUrl = 'http://127.0.0.1:8000/api';
-  constructor(private client: HttpClient) { }
+  private like_id = 0;
 
-  getPostLikes(postId: number): Observable<any> {
-    return this.client.get<any>(`${this.baseUrl}/posts/${postId}/likes`);
+  constructor(private client: HttpClient, private userService: UserService) {
+  }
+  likePost(post_id: number): Observable<any> {
+    return this.client.post(`${this.baseUrl}/like/${this.userService.get_user_id()}/${post_id}/`, {});
+  }
+  unlikePost(post_id: number): Observable<any> {
+    return this.client.delete(`${this.baseUrl}/like/${this.userService.get_user_id()}/${post_id}/`);
   }
 
-  addPostLike(like: Like): Observable<any> {
-    console.log(like);
-    return this.client.post<Like>(`${this.baseUrl}/posts/${like.post_id}/likes`, like);
-  }
-
-  deletePostLike(like: Like): Observable<any> {
-    console.log(like);
-    return this.client.delete<Like>(`${this.baseUrl}/posts/${like.post_id}/likes`);
-  }
-
-  checkPostLike(like: Like): Observable<any> {
-    return this.client.get<any>(`${this.baseUrl}/posts/${like.post_id}/users/${like.user_id}`);
+  isPostLiked(post_id: number): Observable<boolean> {
+    return this.client.get<{ like_id: number }>(`${this.baseUrl}/like/${this.userService.get_user_id()}/${post_id}/`).pipe(
+      map(response => !!response.like_id)
+    );
   }
 }

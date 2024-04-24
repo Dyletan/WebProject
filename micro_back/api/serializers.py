@@ -3,10 +3,14 @@ from .models import Post, Comment, Category, Like
 
 class PostSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
+    likes_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = ['id', 'content', 'category', 'user', 'username', 'created_at']
+        fields = ['id', 'content', 'category', 'user', 'username', 'created_at', 'likes_count']
+
+    def get_likes_count(self, obj):
+        return Like.objects.filter(post=obj).count()
 
     def get_username(self, obj):
         return obj.user.username

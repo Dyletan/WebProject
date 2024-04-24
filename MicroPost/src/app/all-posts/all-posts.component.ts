@@ -4,8 +4,8 @@ import {PostsService} from "../services/posts.service";
 import {Category} from '../models/category';
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {UserService} from "../services/user.service";
-import { LikeService } from '../services/like.service';
-import { Like } from '../models/like';
+import {LikeService} from '../services/like.service';
+import {Like} from '../models/like';
 
 @Component({
   selector: 'app-all-posts',
@@ -15,8 +15,7 @@ import { Like } from '../models/like';
 
 export class AllPostsComponent implements OnInit {
   posts!: Post[];
-  categories!: Category[];
-  likesCounts: number[] = [];
+  categories: Category[] = [];
 
   constructor(private postsService: PostsService, private route: ActivatedRoute, private userService: UserService, private likeService: LikeService) {
   }
@@ -24,13 +23,23 @@ export class AllPostsComponent implements OnInit {
   ngOnInit() {
     this.getPosts();
     this.getCategories();
-    this.getLikes();
-    console.log(this.likesCounts[2])
   }
 
   getPosts() {
     this.postsService.getPosts().subscribe((posts) => {
       this.posts = posts.reverse();
+      this.posts.forEach(post => {
+        if (post.id) {
+          this.likeService.isPostLiked(post.id).subscribe(
+            (isLiked: boolean) => {
+              post.is_liked = isLiked; // Set is_liked property based on result
+            },
+            (error) => {
+              console.error(`Error checking if post ${post.id} is liked:`, error);
+            }
+          );
+        }
+      });
     });
   }
 
@@ -44,7 +53,6 @@ export class AllPostsComponent implements OnInit {
     const category: Category | undefined = this.categories.find((category) => {
       return category.id === +category_id;
     });
-    console.log()
     if (category && category.name) {
       return category.name;
     } else {
@@ -52,42 +60,28 @@ export class AllPostsComponent implements OnInit {
     }
   }
 
-  // getPostLikes(post_id: number): Observable<number> {
-  //   console.log(this.postsService.getPostLikes(post_id).subscribe())
-  //   let likes_count: number;
-  //   this.postsService.getPostLikes(post_id).subscribe(response => {
-  //     likes_count=response.likes_count
-  //   });
-  //   return likes_count;
-  // }
-
-  getLikes(){
-    this.postsService.getPosts().subscribe(posts => {
-      this.posts = posts;
-      this.posts.forEach(post => {
-        if (post.id !== undefined) {
-          this.likeService.getPostLikes(post.id).subscribe(likes => {
-            if (post.id !== undefined) {
-              this.likesCounts[post.id] = likes.likes_count;
-            }
-          });
-        }
-      });
-    });
-  }
-
-  putLike(post_id: number) {
-    const like: Like = {user_id: this.userService.get_user_id(), post_id: post_id}
-    let likeExists: boolean;
-    this.likeService.checkPostLike(like).subscribe(response => {
-      likeExists =response.liked;
-      console.log(likeExists);
-      console.log(like);
-    if (likeExists) {
-      this.likeService.deletePostLike(like).subscribe()
-    } else {
-      this.likeService.addPostLike(like).subscribe()
+  toggleLike(post: Post): void {
+    if (post.id) {
+      if (post.is_liked) {
+        this.likeService.unlikePost(post.id).subscribe(
+          () => {
+            post.is_liked = false;
+          },
+          (error) => {
+            console.error('Error unliking post:', error);
+          }
+        );
+      } else {
+        this.likeService.likePost(post.id).subscribe(
+          () => {
+            post.is_liked = true;
+          },
+          (error) => {
+            console.error('Error liking post:', error);
+          }
+        );
+      }
     }
-    });
   }
 }
+
