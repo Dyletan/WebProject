@@ -6,7 +6,6 @@ import { RegisterComponent } from "./register/register.component";
 import { AllPostsComponent } from "./all-posts/all-posts.component";
 import { PostComponent } from './post/post.component';
 import { AboutComponent } from './about/about.component';
-import { AllCommentsComponent } from './all-comments/all-comments.component';
 
 export const routes: Routes = [
   { path: 'all-posts', component: AllPostsComponent, canActivate: [AuthGuard] },

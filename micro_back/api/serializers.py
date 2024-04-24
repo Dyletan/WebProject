@@ -26,9 +26,13 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField()
     class Meta:
         model = Comment
         fields = '__all__'
+
+    def get_username(self, obj):
+        return obj.user.username
 
 class CategorySerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)

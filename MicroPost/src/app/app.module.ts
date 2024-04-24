@@ -10,7 +10,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './services/auth.interceptor';
-import { AllCommentsComponent } from './all-comments/all-comments.component';
 import { AllPostsComponent } from './all-posts/all-posts.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PostComponent } from './post/post.component';
@@ -29,7 +28,6 @@ import {CommentFormComponent} from "./comment-form/comment-form.component";
     LoginComponent,
     RegisterComponent,
     AppComponent,
-    AllCommentsComponent,
     AllPostsComponent,
     NavbarComponent,
     PostComponent,
