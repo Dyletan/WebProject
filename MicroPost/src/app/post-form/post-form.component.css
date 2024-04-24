@@ -34,10 +34,11 @@
 
 .content-form {
   border: none;
-  width: 80%;
+  width: 60%;
   resize: none;
   flex-grow: 1;
   outline: none;
+  height: 40px;
 }
 
 .post-form {
@@ -57,8 +58,11 @@ select {
   border-radius: 4px;
   box-sizing: border-box;
   margin-top: 6px;
-  margin-bottom: 16px;
+  margin-bottom: 5px;
   resize: vertical;
   margin-left: auto;
   display: block;
+  background-color: white;
+  color: rgb(83, 69, 119);
+  font-weight: bolder;
 }
